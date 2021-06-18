@@ -35,8 +35,7 @@ public class Main {
                 cardValSec = botCards.get(cardTwo - 1);
                 System.out.println("Игрок 2 положил карту");
 
-                if (cardOne > cardValSec)
-                    endSumSecPl = endSumSecPl + (cardOne - cardValSec);
+                endSumSecPl = compareValues(endSumSecPl, cardOne, cardValSec);
 
                 openCards(cardOne, cardValSec);
 
@@ -51,8 +50,7 @@ public class Main {
 
                 cardOne = getConsoleValue(playerCards, in);
 
-                if (cardValSec > cardOne)
-                    endSumFirstPl = endSumFirstPl + (cardValSec - cardOne);
+                endSumFirstPl = compareValues(endSumFirstPl, cardValSec, cardOne);
 
                 openCards(cardOne, cardValSec);
 
@@ -66,6 +64,13 @@ public class Main {
         checkResult(endSumFirstPl, endSumSecPl);
 
         in.close();
+    }
+
+    private static int compareValues(int result, int firstVal, int secondVal) {
+        if (firstVal > secondVal)
+            return result + (firstVal - secondVal);
+        else
+            return result;
     }
 
     private static void openCards(int cardOne, int cardValSec) {
