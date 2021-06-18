@@ -25,24 +25,23 @@ public class Main {
         Scanner in = new Scanner(System.in);
 
         while (playerCards.size() != 0) {
+            cardTwo = 1 + (int) (Math.random() * (botCards.size() - 1));
+            cardValSec = botCards.get(cardTwo - 1);
+
             if (isPlayerMove) {
                 System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
                 System.out.println(playerCards);
 
                 cardOne = getConsoleValue(playerCards, in);
 
-                cardTwo = 1 + (int) (Math.random() * (botCards.size() - 1));
-                cardValSec = botCards.get(cardTwo - 1);
                 System.out.println("Игрок 2 положил карту");
 
-                endSumSecPl = compareValues(endSumSecPl, cardOne, cardValSec);
+                endSumSecPl += compareValues(cardOne, cardValSec);
 
                 openCards(cardOne, cardValSec);
 
                 isPlayerMove = false;
             } else {
-                cardTwo = 1 + (int) (Math.random() * (botCards.size() - 1));
-                cardValSec = botCards.get(cardTwo - 1);
                 System.out.println("Игрок 2 положил карту");
 
                 System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
@@ -50,7 +49,7 @@ public class Main {
 
                 cardOne = getConsoleValue(playerCards, in);
 
-                endSumFirstPl = compareValues(endSumFirstPl, cardValSec, cardOne);
+                endSumFirstPl += compareValues(cardValSec, cardOne);
 
                 openCards(cardOne, cardValSec);
 
@@ -66,11 +65,11 @@ public class Main {
         in.close();
     }
 
-    private static int compareValues(int result, int firstVal, int secondVal) {
+    private static int compareValues(int firstVal, int secondVal) {
         if (firstVal > secondVal)
-            return result + (firstVal - secondVal);
+            return firstVal - secondVal;
         else
-            return result;
+            return 0;
     }
 
     private static void openCards(int cardOne, int cardValSec) {
