@@ -23,47 +23,45 @@ public class Main {
         int endSumSecPl = 0;
         boolean isPlayerMove = true;
 
-        Scanner in = new Scanner(System.in);
+        try (Scanner in = new Scanner(System.in)) {
+            while (playerCards.size() != 0) {
+                cardTwo = 1 + (int) (Math.random() * (botCards.size() - 1));
+                cardValSec = botCards.get(cardTwo - 1);
 
-        while (playerCards.size() != 0) {
-            cardTwo = 1 + (int) (Math.random() * (botCards.size() - 1));
-            cardValSec = botCards.get(cardTwo - 1);
+                if (isPlayerMove) {
+                    System.out.print("Первый игрок, введите номинал карты из оставшихся карт: " +
+                            playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
-            if (isPlayerMove) {
-                System.out.print("Первый игрок, введите номинал карты из оставшихся карт: " +
-                        playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
+                    cardOne = getConsoleValue(playerCards, in);
 
-                cardOne = getConsoleValue(playerCards, in);
+                    System.out.println("Игрок 2 положил карту");
 
-                System.out.println("Игрок 2 положил карту");
+                    endSumSecPl += compareValues(cardOne, cardValSec);
 
-                endSumSecPl += compareValues(cardOne, cardValSec);
+                    openCards(cardOne, cardValSec);
 
-                openCards(cardOne, cardValSec);
+                    isPlayerMove = false;
+                } else {
+                    System.out.println("Игрок 2 положил карту");
 
-                isPlayerMove = false;
-            } else {
-                System.out.println("Игрок 2 положил карту");
+                    System.out.println("Первый игрок, введите номинал карты из оставшихся карт: " +
+                            playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
-                System.out.println("Первый игрок, введите номинал карты из оставшихся карт: " +
-                        playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
+                    cardOne = getConsoleValue(playerCards, in);
 
-                cardOne = getConsoleValue(playerCards, in);
+                    endSumFirstPl += compareValues(cardValSec, cardOne);
 
-                endSumFirstPl += compareValues(cardValSec, cardOne);
+                    openCards(cardOne, cardValSec);
 
-                openCards(cardOne, cardValSec);
+                    isPlayerMove = true;
+                }
 
-                isPlayerMove = true;
+                playerCards.remove((Integer) cardOne);
+                botCards.remove(cardTwo - 1);
             }
 
-            playerCards.remove((Integer) cardOne);
-            botCards.remove(cardTwo - 1);
+            checkResult(endSumFirstPl, endSumSecPl);
         }
-
-        checkResult(endSumFirstPl, endSumSecPl);
-
-        in.close();
     }
 
     private static int compareValues(int firstVal, int secondVal) {
