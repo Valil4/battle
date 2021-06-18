@@ -21,7 +21,10 @@ public class Main {
 
         do {
             if (isPlayerMove ) {
-                System.out.println("Первый игрок, введите номинал карты из оставшихся карт: ");
+                System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
+                playerCards.forEach(a -> System.out.print(a + " "));
+                System.out.println();
+
                 cardOne = in.nextInt();
                 cardValFirst = playerCards.get(playerCards.indexOf(cardOne));
 
@@ -44,7 +47,10 @@ public class Main {
                 cardValSec = botCards.get(cardTwo - 1);
                 System.out.println("Игрок 2 положил карту");
 
-                System.out.println("Первый игрок, введите номинал карты из оставшихся карт: ");
+                System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
+                playerCards.forEach(a -> System.out.print(a + " "));
+                System.out.println();
+
                 cardOne = in.nextInt();
                 cardValFirst = playerCards.get(playerCards.indexOf(cardOne));
 
@@ -60,8 +66,8 @@ public class Main {
                 isPlayerMove = true;
             }
 
-            playerCards.remove(cardTwo - 1);
-            botCards.remove(cardOne - 1);
+            playerCards.remove(playerCards.indexOf(cardOne));
+            botCards.remove(cardTwo - 1);
 
             i--;
         } while (i != 0);
