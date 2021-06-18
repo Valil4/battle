@@ -24,7 +24,7 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
 
-        do {
+        while (playerCards.size() != 0) {
             if (isPlayerMove) {
                 System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
                 System.out.println(playerCards);
@@ -38,11 +38,7 @@ public class Main {
                 if (cardOne > cardValSec)
                     endSumSecPl = endSumSecPl + (cardOne - cardValSec);
 
-                System.out.println("\nВскрываем карты:");
-                System.out.println("Первый игрок вытянул карту: " + cardOne);
-                System.out.println("Второй игрок вытянул карту: " + cardValSec);
-
-                System.out.println("\n" + "-- Переход кода --" + "\n");
+                openCards(cardOne, cardValSec);
 
                 isPlayerMove = false;
             } else {
@@ -52,30 +48,32 @@ public class Main {
 
                 System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
                 System.out.println(playerCards);
-                System.out.println();
 
                 cardOne = getConsoleValue(playerCards, in);
 
                 if (cardValSec > cardOne)
                     endSumFirstPl = endSumFirstPl + (cardValSec - cardOne);
 
-                System.out.println("\nВскрываем карты:");
-                System.out.println("Второй игрок вытянул карту: " + cardValSec);
-                System.out.println("Первый игрок вытянул карту: " + cardOne);
-
-                System.out.println("\n" + "-- Переход кода --" + "\n");
+                openCards(cardOne, cardValSec);
 
                 isPlayerMove = true;
             }
 
             playerCards.remove((Integer) cardOne);
             botCards.remove(cardTwo - 1);
-
-        } while (playerCards.size() != 0);
+        }
 
         checkResult(endSumFirstPl, endSumSecPl);
 
         in.close();
+    }
+
+    private static void openCards(int cardOne, int cardValSec) {
+        System.out.println("\nВскрываем карты:");
+        System.out.println("Первый игрок вытянул карту: " + cardOne);
+        System.out.println("Второй игрок вытянул карту: " + cardValSec);
+
+        System.out.println("\n" + "-- Переход кода --" + "\n");
     }
 
     private static int getConsoleValue(List<Integer> playerCards, Scanner in) {
