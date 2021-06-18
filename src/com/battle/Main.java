@@ -15,19 +15,21 @@ public class Main {
         var playerCards = IntStream.range(0, 12).boxed().collect(toList());
         var botCards = new ArrayList<>(playerCards);
 
-        int cardOne = 0, cardTwo, cardValSec;
-        int endSumFirstPl = 0, endSumSecPl = 0;
-        boolean isPlayerMove = true, errorInput;
+        int cardOne;
+        int cardTwo;
+        int cardValSec;
+        int endSumFirstPl = 0;
+        int endSumSecPl = 0;
+        boolean isPlayerMove = true;
 
         Scanner in = new Scanner(System.in);
 
         do {
             if (isPlayerMove) {
                 System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
-                playerCards.forEach(a -> System.out.print(a + " "));
-                System.out.println();
+                System.out.println(playerCards);
 
-                cardOne = getConsoleValue(true, playerCards, in);
+                cardOne = getConsoleValue(playerCards, in);
 
                 cardTwo = 1 + (int) (Math.random() * (botCards.size() - 1));
                 cardValSec = botCards.get(cardTwo - 1);
@@ -49,10 +51,10 @@ public class Main {
                 System.out.println("Игрок 2 положил карту");
 
                 System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
-                playerCards.forEach(a -> System.out.print(a + " "));
+                System.out.println(playerCards);
                 System.out.println();
 
-                cardOne = getConsoleValue(true, playerCards, in);
+                cardOne = getConsoleValue(playerCards, in);
 
                 if (cardValSec > cardOne)
                     endSumFirstPl = endSumFirstPl + (cardValSec - cardOne);
@@ -76,9 +78,10 @@ public class Main {
         in.close();
     }
 
-    private static int getConsoleValue(boolean errorInput, List<Integer> playerCards, Scanner in) {
+    private static int getConsoleValue(List<Integer> playerCards, Scanner in) {
 
         int inputValue = 0;
+        boolean errorInput = true;
 
         while (errorInput) {
             try {
