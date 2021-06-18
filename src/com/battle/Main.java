@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -29,8 +30,8 @@ public class Main {
             cardValSec = botCards.get(cardTwo - 1);
 
             if (isPlayerMove) {
-                System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
-                System.out.println(playerCards);
+                System.out.print("Первый игрок, введите номинал карты из оставшихся карт: " +
+                        playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
                 cardOne = getConsoleValue(playerCards, in);
 
@@ -44,8 +45,8 @@ public class Main {
             } else {
                 System.out.println("Игрок 2 положил карту");
 
-                System.out.print("Первый игрок, введите номинал карты из оставшихся карт: ");
-                System.out.println(playerCards);
+                System.out.println("Первый игрок, введите номинал карты из оставшихся карт: " +
+                        playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
                 cardOne = getConsoleValue(playerCards, in);
 
