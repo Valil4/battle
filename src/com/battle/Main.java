@@ -29,7 +29,7 @@ public class Main {
                 cardValSec = botCards.get(cardTwo - 1);
 
                 if (isPlayerMove) {
-                    System.out.print("Первый игрок, введите номинал карты из оставшихся карт: " +
+                    System.out.println("Первый игрок, введите номинал карты из оставшихся карт: " +
                             playerCards.stream().map(String::valueOf).collect(Collectors.joining(", ")));
 
                     cardOne = getConsoleValue(playerCards, in);
@@ -81,27 +81,17 @@ public class Main {
 
     private static int getConsoleValue(List<Integer> playerCards, Scanner in) {
 
-        int inputValue = 0;
-        boolean errorInput = true;
+        int inputValue;
 
-        while (errorInput) {
-            try {
-                if (in.hasNextInt()) {
-                    inputValue = in.nextInt();
-                    if (inputValue < 0 || !playerCards.contains(inputValue)) {
-                        System.out.println("Введите число из списка оставшихся!");
-                        continue;
-                    }
-                } else {
-                    in.next();
-                    System.out.println("Введите число из списка оставшихся!");
-                    continue;
-                }
-                errorInput = false;
-            } catch (InputMismatchException ime) {
+        do {
+            while (!in.hasNextInt()) {
                 System.out.println("Введите число из списка оставшихся!");
+                in.next();
             }
-        }
+            System.out.println("Введите число из списка оставшихся!");
+            inputValue = in.nextInt();
+        } while (inputValue < 0 || !playerCards.contains(inputValue));
+
         return inputValue;
     }
 
